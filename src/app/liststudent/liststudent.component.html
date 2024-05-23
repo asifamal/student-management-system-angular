@@ -1,0 +1,32 @@
+<div style="display: flex; justify-content: center; margin-top: 80px; margin-bottom: 50px;">
+    <button class="add" routerLink="/register" routerLinkActive="Active"> Registration
+    </button>
+    
+</div>
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Roll Number</th>
+            <th>Student Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let student of studentListFromService; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{student.firstName + student.lastName}}</td>
+            <td>{{student.email}}</td>
+            <td>
+                <button type="button" class="btn btn-success" (click)=onViewClick(student.id)>View</button>
+                <button type="button" class="btn btn-info" style="margin-left: 5px;" (click)=onEditClicked(student.id)>Edit</button>
+                <button type="button" class="btn btn-danger" style="margin-left: 5px;" (click)="OnDeleteClicked(student.id)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<router-outlet></router-outlet>

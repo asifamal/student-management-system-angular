@@ -1,0 +1,26 @@
+.card {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .card-body p {
+    margin-bottom: 10px;
+  }
+  
+  .card-body strong {
+    font-weight: bold;
+  }
+
+  .button-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
