@@ -69,6 +69,36 @@ table {
 
 
 
+   .input {
+    background-color: #a59f9f;
+    max-width: 190px;
+    height: 40px;
+    padding: 10px;
+    /* text-align: center; */
+    border: 2px solid white;
+    border-radius: 5px;
+    /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
+  }
+  
+  .input:focus {
+    color: rgb(255, 255, 255);
+    background-color: #b96161;
+    outline-color: rgb(211, 81, 81);
+    box-shadow: -3px -3px 15px rgb(0, 255, 255);
+    transition: 0.1s;
+    transition-property: box-shadow;
+  }
+
+  .design-button{
+    float: right;
+    margin-right: 100px;
+    margin-bottom: 20px;
+  }
+  
+  
+
+
+
 
 
 

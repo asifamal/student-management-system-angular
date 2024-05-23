@@ -1,26 +1,79 @@
-.card {
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .card h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .card-body p {
-    margin-bottom: 10px;
-  }
-  
-  .card-body strong {
-    font-weight: bold;
-  }
 
-  .button-div{
+
+.card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+}
+
+.card h2 {
+    margin-top: 0;
+    font-weight: bold;
+    color: #333;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.row {
     display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.col-md-6 {
+    flex-basis: 50%;
+    padding: 20px;
+}
+
+.col-md-6 p {
+    margin-bottom: 10px;
+}
+
+.col-md-6 strong {
+    font-weight: bold;
+    color: #666;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+ul li:before {
+    content: "\2022";
+    font-size: 18px;
+    color: #666;
+    margin-right: 10px;
+}
+
+.button-div {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #23527c;
+    border-color: #1d4e73;
+}
+
+.router-outlet {
+    margin-top: 20px;
+}

@@ -1,10 +1,11 @@
-<div style="display: flex; justify-content: center; margin-top: 80px; margin-bottom: 50px;">
+<div style="display: flex; justify-content: center; margin-top: 60px; margin-bottom: 50px;">
     <button class="add" routerLink="/register" routerLinkActive="Active"> Registration
     </button>
-    
 </div>
 
-
+<div class="design-button">
+    <input type="text" name="text" class="input" placeholder="Search student" [(ngModel)]="searchQuery" (input)="filterStudents()" />
+</div>
 
 <table>
     <thead>
@@ -16,14 +17,14 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let student of studentListFromService; let i = index">
+        <tr *ngFor="let student of filteredStudents; let i = index">
             <td>{{i+1}}</td>
-            <td>{{student.firstName + student.lastName}}</td>
+            <td>{{student.firstName + ' ' + student.lastName}}</td>
             <td>{{student.email}}</td>
             <td>
-                <button type="button" class="btn btn-success" (click)=onViewClick(student.id)>View</button>
-                <button type="button" class="btn btn-info" style="margin-left: 5px;" (click)=onEditClicked(student.id)>Edit</button>
-                <button type="button" class="btn btn-danger" style="margin-left: 5px;" (click)="OnDeleteClicked(student.id)">Delete</button>
+                <button type="button" class="btn btn-success" (click)="onViewClick(student.id)"><i class="fa-regular fa-eye"></i></button>
+                <button type="button" class="btn btn-info" style="margin-left: 5px;" (click)="onEditClicked(student.id)"><i class="fa-solid fa-pen"></i></button>
+                <button type="button" class="btn btn-danger" style="margin-left: 5px;" (click)="onDeleteClicked(student.id)"><i class="fa-solid fa-trash"></i></button>
             </td>
         </tr>
     </tbody>

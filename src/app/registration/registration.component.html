@@ -1,85 +1,116 @@
 <form [formGroup]="studentForm">
+
+
     <div class="form-container">
         <h2>Student Registration</h2>
         <div class="form-group">
-            <label>First Name:</label>
+            <label>First Name:*</label>
             <input formControlName="firstName" type="text" class="form-control">
+            <small *ngIf="studentForm.get('firstName')?.touched && studentForm.get('firstName')?.invalid">First Name is
+                required.</small>
         </div>
         <div class="form-group">
-            <label>Last Name:</label>
+            <label>Last Name:*</label>
             <input formControlName="lastName" type="text" class="form-control">
+            <small *ngIf="studentForm.get('lastName')?.touched && studentForm.get('lastName')?.invalid">Last Name is
+                required.</small>
         </div>
         <div class="form-group">
-            <label>Date of Birth:</label>
+            <label>Date of Birth:*</label>
             <input formControlName="dateOfBirth" type="date" class="form-control">
+            <small *ngIf="studentForm.get('dateOfBirth')?.touched && studentForm.get('dateOfBirth')?.invalid">Date of
+                Birth is required.</small>
         </div>
         <div class="form-group">
-            <label>Email:</label>
+            <label>Email:*</label>
             <input formControlName="email" type="email" class="form-control">
+            <small *ngIf="studentForm.get('email')?.touched && studentForm.get('email')?.invalid">
+                {{ studentForm.get('email')?.errors?.['required'] ? 'Email is required.' : 'Invalid email format.' }}
+            </small>
         </div>
         <div formGroupName="address" class="address-group">
-            <h3>Address</h3>
+            <h3>Address*</h3>
             <div class="form-group">
-                <label>Street:</label>
+                <label>Street:*</label>
                 <textarea formControlName="street" class="form-control"></textarea>
+                <small
+                    *ngIf="studentForm.get('address.street')?.touched && studentForm.get('address.street')?.invalid">Street
+                    is required.</small>
             </div>
             <div class="form-group">
-                <label>State:</label>
+                <label>State:*</label>
                 <select formControlName="state" id="state" class="form-control">
                     <option value="kerala">Kerala</option>
                 </select>
-                <label>City:</label>
+                <small
+                    *ngIf="studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid">State
+                    is required.</small>
+                <label>City:*</label>
                 <select formControlName="city" id="city" class="form-control">
                     <option value="kochi">Kochi</option>
                 </select>
+                <small *ngIf="studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid">City
+                    is required.</small>
             </div>
             <div class="form-group">
-                <label>Pincode:</label>
+                <label>Pincode:*</label>
                 <input formControlName="pincode" type="number" class="form-control">
+                <small
+                    *ngIf="studentForm.get('address.pincode')?.touched && studentForm.get('address.pincode')?.invalid">
+                    {{ studentForm.get('address.pincode')?.errors?.['required'] ? 'Pincode is required.' : 'Pincode must
+                    be 6 digits.' }}
+                </small>
             </div>
-        </div>
-        <div class="form-group" style="display: flex; align-items: center; justify-content: center;">
-            <label>Subject:</label>
-            <div class="radio-group" style="display: flex; align-items: center;">
-                <label class="radio-label">
-                    <input type="checkbox" formControlName="subject" value="math">
-                    Math
-                </label>
-                <label class="radio-label">
-                    <input type="checkbox" formControlName="subject" value="science">
-                    Science
-                </label>
-                <label class="radio-label">
-                    <input type="checkbox" formControlName="subject" value="science">
-                    English
-                </label>
+            <div class="form-group" style="display: flex; align-items: center; justify-content: center;">
+                <label>Subject:*</label>
+                <div class="radio-group" style="display: flex; align-items: center;">
+                    <label class="radio-label">
+                        <input type="checkbox" (change)="onCheckboxChange($event)" value="Math">
+                        Math
+                    </label>
+                    <label class="radio-label">
+                        <input type="checkbox" (change)="onCheckboxChange($event)" value="Science">
+                        Science
+                    </label>
+                    <label class="radio-label">
+                        <input type="checkbox" (change)="onCheckboxChange($event)" value="English">
+                        English
+                    </label>
+                </div>
+                <small *ngIf="studentForm.get('subjects')?.touched && studentForm.get('subjects')?.invalid">At least one
+                    subject is required.</small>
             </div>
-        </div>
-
-        <div formArrayName="previousSchool">
-            <div *ngFor="let previous of previousSchool.controls; let i = index" [formGroupName]="i">
-                <h4>Schooling {{i+1}}</h4>
-                <div>
-                    <label for="schoolName">Previous School:</label>
-                    <input type="text" id="schoolName" formControlName="schoolName" value="previousschool"/>
+            <div formArrayName="previousSchool" class="previous-school">
+                <div *ngFor="let previous of previousSchool.controls; let i = index" [formGroupName]="i">   
+                    <div class="form-group">
+                        <label for="schoolName">Previous School:</label>
+                        <input type="text" id="schoolName" formControlName="schoolName" class="form-control" />
+                        <small *ngIf="previous.get('schoolName')?.touched && previous.get('schoolName')?.invalid">School
+                            Name is required.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="startYear">Year of Start:</label>
+                        <input type="date" id="startYear" formControlName="startYear" placeholder="dd-mm-yyyy"
+                            class="form-control" />
+                        <small *ngIf="previous.get('startYear')?.touched && previous.get('startYear')?.invalid">Start
+                            Year is required.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="endYear">Year of End:</label>
+                        <input type="date" id="endYear" formControlName="endYear" placeholder="dd-mm-yyyy"
+                            class="form-control" />
+                        <small *ngIf="previous.get('endYear')?.touched && previous.get('endYear')?.invalid">End Year is
+                            required.</small>
+                    </div>
+                    <button type="button" class="btn btn-success"  (click)="removeSchool(i)">Remove</button>
                 </div>
-
-                <div>
-                    <label for="startYear">Year of Start:</label>
-                    <input type="date" id="startYear" formControlName="startYear" placeholder="dd-mm-yyyy" value="startyear"/>
-                </div>
-
-                <div>
-                    <label for="endYear">Year of End:</label>
-                    <input type="date" id="endYear" formControlName="endYear" placeholder="dd-mm-yyyy" value="endyear"/>
-                </div>
-                <button type="button" (click)="removeSchool(i)">Remove</button>
             </div>
-        </div>
-        <div style="margin-left: 50px;">
-            <button type="button" class="btn btn-info" (click)="addSchool()">Add Previous Schooling</button>
-            <button type="button" class="btn btn-primary" (click)="onSubmit(studentForm.value)">Submit</button>
+            <div style="display: flex; justify-content: center;">
+                <button type="button" class="btn btn-info" (click)="addSchool()">Add Previous Schooling</button>
+                <span style="margin: 0 10px;"></span> <button type="button" class="btn btn-primary"
+                    (click)="onSubmit(studentForm.value)">Submit</button>
+            </div>
+
         </div>
 
-    </div>
-</form>
+        <router-outlet></router-outlet>

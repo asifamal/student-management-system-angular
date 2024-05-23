@@ -1,24 +1,33 @@
 <div class="card" *ngIf="student">
     <h2>Student Details</h2>
     <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <p><strong>First Name:{{student.firstName}}</strong></p>
-          <p><strong>Last Name:{{student.lastName}}</strong> </p>
-          <p><strong>Email:{{student.email}}</strong></p>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>First Name: </strong>{{ student.firstName }}</p>
+                <p><strong>Last Name: </strong>{{ student.lastName }}</p>
+                <p><strong>Email: </strong>{{ student.email }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Address:</strong></p>
+                <p>{{ student.address.street }}</p>
+                <p>{{ student.address.city }}, {{ student.address.state }}, {{ student.address.pincode }}</p>
+                <p><strong>Subjects:</strong></p>
+                <ul>
+                    <li *ngFor="let subject of student.subjects">{{ subject }}</li>
+                </ul>
+                <p><strong>Previous Schooling:</strong></p>
+                <ul>
+                    <li *ngFor="let school of student.previousSchool">
+                        {{ school.schoolName }} ({{ school.startYear }} - {{ school.endYear }})
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-6">
-          <p><strong>Address:{{student.street}}</strong><br></p>
-          <p><strong>Subject:{{student.subject}}</strong></p>
-          <p><strong>Previous Schooling:</strong></p>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
-
-  <div class="button-div">
+<div class="button-div">
     <button type="button" class="btn btn-primary btn-lg" (click)="goHome()">Go Home</button>
-  </div>
+</div>
 
-  <router-outlet></router-outlet>
+<router-outlet></router-outlet>
