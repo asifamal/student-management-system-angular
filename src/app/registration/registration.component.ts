@@ -14,6 +14,7 @@ export class RegistrationComponent implements OnInit {
   constructor(private form: FormBuilder, private studentService: StudentserviceService, private router: Router) { }
 
   studentForm!: FormGroup;
+  emailTaken = false
 
   ngOnInit(): void {
     this.studentForm = this.form.group({
@@ -61,7 +62,7 @@ export class RegistrationComponent implements OnInit {
         },
         (error) => {
           console.error(error);
-          alert('Email already exists');
+          this.emailTaken = !this.emailTaken
         }
       );
     }
