@@ -10,18 +10,20 @@ import { Router } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
 
+  studentForm!: FormGroup;
+  emailTaken = false;
+  states!: any[];
+  cities!: any[];
+  selectedState!: any;
 
   constructor(private form: FormBuilder, private studentService: StudentserviceService, private router: Router) { }
-
-  studentForm!: FormGroup;
-  emailTaken = false
 
   ngOnInit(): void {
     this.studentForm = this.form.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      email: ['', Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       address: this.form.group({
         street: ['', Validators.required],
         state: ['', Validators.required],
@@ -31,9 +33,10 @@ export class RegistrationComponent implements OnInit {
       subjects: this.form.array([], Validators.required),
       previousSchool: this.form.array([])
     });
+    this.cities =[]
+    this.loadStates();
   }
 
-  
   get f() {
     return this.studentForm.controls;
   }
@@ -62,7 +65,7 @@ export class RegistrationComponent implements OnInit {
         },
         (error) => {
           console.error(error);
-          this.emailTaken = !this.emailTaken
+          this.emailTaken = true;
         }
       );
     }
@@ -75,10 +78,25 @@ export class RegistrationComponent implements OnInit {
       endYear: ['', Validators.required]
     });
     this.previousSchool.push(previousSchooling);
-
   }
 
   removeSchool(index: number) {
     this.previousSchool.removeAt(index);
+  }
+
+  loadStates() {
+    this.studentService.getStates().subscribe(data => {
+      this.states = data;
+    });
+  }
+
+  onStateChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    let stateId =Number(selectElement.value) ;
+    console.log(stateId);
+ 
+    this.studentService.getCities(stateId).subscribe(data => {
+      this.cities = data;
+    });
   }
 }
