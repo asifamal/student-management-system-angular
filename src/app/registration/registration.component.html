@@ -80,8 +80,9 @@
                 <small *ngIf="studentForm.get('subjects')?.touched && studentForm.get('subjects')?.invalid">At least one
                     subject is required.</small>
             </div>
+        </div>
             <div formArrayName="previousSchool" class="previous-school">
-                <div *ngFor="let previous of previousSchool.controls; let i = index" [formGroupName]="i">   
+                <div *ngFor="let previous of previousSchool.controls; let i = index" [formGroupName]="i">
                     <div class="form-group">
                         <label for="schoolName">Previous School:</label>
                         <input type="text" id="schoolName" formControlName="schoolName" class="form-control" />
@@ -102,15 +103,14 @@
                         <small *ngIf="previous.get('endYear')?.touched && previous.get('endYear')?.invalid">End Year is
                             required.</small>
                     </div>
-                    <button type="button" class="btn btn-success"  (click)="removeSchool(i)">Remove</button>
+                    <button type="button" class="btn btn-success" (click)="removeSchool(i)">Remove</button>
                 </div>
             </div>
             <div style="display: flex; justify-content: center;">
                 <button type="button" class="btn btn-info" (click)="addSchool()">Add Previous Schooling</button>
                 <span style="margin: 0 10px;"></span> <button type="button" class="btn btn-primary"
                     (click)="onSubmit(studentForm.value)">Submit</button>
-            </div>
 
-        </div>
 
-        <router-outlet></router-outlet>
+
+<router-outlet></router-outlet>

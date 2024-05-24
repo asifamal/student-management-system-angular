@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Student } from '../models/student.model';
-import { map } from 'rxjs';
+import { map, switchMap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,25 @@ export class StudentserviceService {
   url = "https://task-management-3ce9a-default-rtdb.asia-southeast1.firebasedatabase.app/students.json"
 
   createStudent(studentData: any) {
-    return this.http.post(this.url, studentData)
+    return this.http.get<{ [key: string]: Student }>(this.url).pipe(
+      map((response) => {
+        let student = [];
+        for (let key in response) {
+          if (response.hasOwnProperty(key)) {
+            student.push({ ...response[key], id: key })
+          }
+        }
+        return student;
+      }),
+      switchMap((students) => {
+        const existingStudent = students.find((student) => student.email === studentData.email);
+        if (existingStudent) {
+          return throwError('Email already exists');
+        } else {
+          return this.http.post(this.url, studentData);
+        }
+      })
+    );
   }
 
   getStudent() {
@@ -42,6 +60,7 @@ export class StudentserviceService {
   deleteStudent(id:string | undefined){
     return this.http.delete('https://task-management-3ce9a-default-rtdb.asia-southeast1.firebasedatabase.app/students/'+id+'.json')
   }
+
 
 
 

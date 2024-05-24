@@ -54,14 +54,17 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(data: any) {
     if (this.studentForm.valid) {
-      this.studentService.createStudent(data).subscribe((res) => {
-        console.log(res);
-        this.router.navigate(['/home'])
-      });
-    }else{
-      this.studentForm.markAllAsTouched()
+      this.studentService.createStudent(data).subscribe(
+        (res) => {
+          console.log(res);
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.error(error);
+          alert('Email already exists');
+        }
+      );
     }
-
   }
 
   addSchool() {
