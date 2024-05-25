@@ -22,6 +22,7 @@ export class ViewstudentComponent implements OnInit {
 
   fetchView(id: any){
     this.studentService.getStudentById(id).subscribe((res) => {
+      console.log(res)
       this.student = res
     })
   }

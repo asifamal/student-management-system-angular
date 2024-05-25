@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentserviceService } from '../services/studentservice.service';
 import { Router } from '@angular/router';
+import { Student } from '../models/student.model';
 
 @Component({
   selector: 'app-editstudent',
@@ -31,7 +32,6 @@ export class EditstudentComponent implements OnInit {
         pincode: ['', Validators.required]
       }),
       subjects: this.formBuilder.array([], Validators.required),
-      previousSchool: this.formBuilder.array([])
     });
   }
 
@@ -43,7 +43,6 @@ export class EditstudentComponent implements OnInit {
         lastName: currentStudent.lastName,
         email: currentStudent.email,
         dateOfBirth: currentStudent.dateOfBirth,
-        subject: currentStudent.subject
       });
 
       this.studentForm.get('address')?.patchValue({
@@ -53,17 +52,16 @@ export class EditstudentComponent implements OnInit {
         pincode: currentStudent.address.pincode
       });
 
-      if (currentStudent.previousSchool) {
-        currentStudent.previousSchool.forEach((school: any) => {
-          this.previousSchoolControls.push(this.formBuilder.group({
-            schoolName: [school.schoolName],
-            startYear: [school.startYear],
-            endYear: [school.endYear]
-          }));
-        });
-      }
+
+      const subjects = this.studentForm.get('subjects') as FormArray;
+      subjects.clear()
+      currentStudent.subjects.forEach((subjects: any) => {
+        subjects.push(this.formBuilder.control(subjects));
+      });
     }
   }
+
+  
   onCheckboxChange(event: any): void {
     const subjects: FormArray = this.studentForm.get('subjects') as FormArray;
 
@@ -97,10 +95,16 @@ export class EditstudentComponent implements OnInit {
 
   onUpdateStudent(): void {
     if (this.studentForm.valid) {
-      this.studentService.updateStudent(this.studentService.currentStudentId, this.studentForm.value)
+      const updatedStudent: Student = {
+        id: this.studentService.currentStudentId,
+        ...this.studentForm.value
+      };
+      this.studentService.updateStudent(this.studentService.currentStudentId, updatedStudent)
         .subscribe(() => {
           this.router.navigate(['/home']);
         });
+    } else {
+      this.studentForm.markAllAsTouched();
     }
   }
 }

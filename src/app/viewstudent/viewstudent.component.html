@@ -1,33 +1,23 @@
-<div class="card" *ngIf="student">
-    <h2>Student Details</h2>
+<div class="card mx-auto" *ngIf="student" style="max-width: 400px;">
+    <h2 class="card-header">Student Details</h2>
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <p><strong>First Name: </strong>{{ student.firstName }}</p>
-                <p><strong>Last Name: </strong>{{ student.lastName }}</p>
-                <p><strong>Email: </strong>{{ student.email }}</p>
-            </div>
-            <div class="col-md-6">
-                <p><strong>Address:</strong></p>
-                <p>{{ student.address.street }}</p>
-                <p>{{ student.address.city }}, {{ student.address.state }}, {{ student.address.pincode }}</p>
-                <p><strong>Subjects:</strong></p>
-                <ul>
-                    <li *ngFor="let subject of student.subjects">{{ subject }}</li>
-                </ul>
-                <p><strong>Previous Schooling:</strong></p>
-                <ul>
-                    <li *ngFor="let school of student.previousSchool">
-                        {{ school.schoolName }} ({{ school.startYear }} - {{ school.endYear }})
-                    </li>
-                </ul>
-            </div>
+        <div class="float-left">
+            <p><strong>First Name: </strong>{{ student.first_name }}</p>
+            <p><strong>Last Name: </strong>{{ student.last_name }}</p>
+            <p><strong>Email: </strong>{{ student.email }}</p>
+            <p><strong>Address:</strong></p>
+            <p>{{ student.street }}</p>
+            <p>{{ student.city }}, {{ student.state }}, {{ student.pincode }}</p>
+        </div>
+        <div class="float-right">
+            <p><strong>Subjects:</strong></p>
+            <ul>
+                <li *ngFor="let subject of student.subjects">{{ subject }}</li>
+            </ul>
         </div>
     </div>
 </div>
 
-<div class="button-div">
-    <button type="button" class="btn btn-primary btn-lg" (click)="goHome()">Go Home</button>
+<div class="button-div text-center">
+    <button class="btn btn-primary" (click)="goHome()">Go home</button>
 </div>
-
-<router-outlet></router-outlet>

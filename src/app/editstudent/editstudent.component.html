@@ -1,5 +1,5 @@
 
-<form [formGroup]="studentForm" (ngSubmit)="onUpdateStudent()">
+<form [formGroup]="studentForm">
   <div class="form-container">
     <h2>Edit Student Details</h2>
     <div class="form-group">
@@ -39,12 +39,20 @@
         <label>State:</label>
         <select formControlName="state" id="state" class="form-control">
           <option value="kerala">Kerala</option>
+          <option value="kerala">Tamilnadu</option>
+          <option value="kerala">Karnataka</option>
+          <option value="kerala">Maharashtra</option>
         </select>
         <small *ngIf="studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid">State is required.</small>
 
         <label>City:</label>
         <select formControlName="city" id="city" class="form-control">
           <option value="kochi">Kochi</option>
+          <option value="kochi">Kollam</option>
+          <option value="kochi">Adoor</option>
+          <option value="kochi">TVM</option>
+          <option value="kochi">Thrissur</option>
+          <option value="kochi">Kunnamkulam</option>
         </select>
         <small *ngIf="studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid">City is required.</small>
 
@@ -56,52 +64,28 @@
 
       </div>
     </div>
-    <div class="radio-group" style="display: flex; align-items: center; justify-content: center;">
+    <div class="checkbox" style="margin-top: 10px; margin-bottom: 10px;">
+      <label style="margin-right: 10px;">Subject:*</label>
       <label class="radio-label">
-        <input type="checkbox" (change)="onCheckboxChange($event)" value="Math">
+        <input type="checkbox" (change)="onCheckboxChange($event)" formControlName="subjects" value="Math">
         Math
       </label>
       <label class="radio-label">
-        <input type="checkbox" (change)="onCheckboxChange($event)" value="Science">
+        <input type="checkbox" (change)="onCheckboxChange($event)" formControlName="subjects" value="Science">
         Science
       </label>
       <label class="radio-label">
-        <input type="checkbox" (change)="onCheckboxChange($event)" value="English">
+        <input type="checkbox" (change)="onCheckboxChange($event)" formControlName="subjects" value="English">
         English
       </label>
     </div>
     <small *ngIf="studentForm.get('subjects')?.touched && studentForm.get('subjects')?.invalid">At least one
       subject is required.</small>
-
-    <div formArrayName="previousSchool">
-      <div *ngFor="let previous of previousSchoolControls.controls; let i = index" [formGroupName]="i">
-        <h4>Schooling {{i + 1}}</h4>
-        <div>
-          <label>Previous School:</label>
-          <input type="text" formControlName="schoolName" class="form-control" />
-          <small *ngIf="previous.get('schoolName')?.touched && previous.get('schoolName')?.invalid">School
-              Name is required.</small>
-        </div>
-        <div>
-          <label>Year of Start:</label>
-          <input type="date" formControlName="startYear" class="form-control" />
-          <small *ngIf="previous.get('startYear')?.touched && previous.get('startYear')?.invalid">Start
-              Year is required.</small>
-        </div>
-        <div>
-          <label>Year of End:</label>
-          <input type="date" formControlName="endYear" class="form-control" />
-          <small *ngIf="previous.get('endYear')?.touched && previous.get('endYear')?.invalid">End Year is
-              required.</small>
-        </div>
-        <button type="button" class="btn btn-danger" (click)="removeSchool(i)">Remove</button>
-      </div>
-    </div>
     
 
     <div style="display: flex; justify-content: center;">
       <button type="button" class="btn btn-info" (click)="addPreviousSchool()">Add Previous School</button>
-      <button type="submit" class="btn btn-primary">Update</button>
+      <button type="button" class="btn btn-primary" (click)="onUpdateStudent()">Update</button>
     </div>
   </div>
 </form>

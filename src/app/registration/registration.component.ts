@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { StudentserviceService } from '../services/studentservice.service';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { StudentserviceService } from '../services/studentservice.service'; 
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registration',
@@ -12,9 +13,7 @@ export class RegistrationComponent implements OnInit {
 
   studentForm!: FormGroup;
   emailTaken = false;
-  states!: any[];
-  cities!: any[];
-  selectedState!: any;
+
 
   constructor(private form: FormBuilder, private studentService: StudentserviceService, private router: Router) { }
 
@@ -33,8 +32,8 @@ export class RegistrationComponent implements OnInit {
       subjects: this.form.array([], Validators.required),
       previousSchool: this.form.array([])
     });
-    this.cities =[]
-    this.loadStates();
+  
+
   }
 
   get f() {
@@ -57,19 +56,35 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit(data: any) {
+    this.markFormGroupTouched(this.studentForm);
+  
     if (this.studentForm.valid) {
       this.studentService.createStudent(data).subscribe(
         (res) => {
           console.log(res);
-          this.router.navigate(['/home']);
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Student registration successful!',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            this.router.navigate(['/home']);
+          });
         },
         (error) => {
           console.error(error);
           this.emailTaken = true;
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
         }
       );
     }
   }
+  
 
   addSchool() {
     const previousSchooling = this.form.group({
@@ -84,19 +99,15 @@ export class RegistrationComponent implements OnInit {
     this.previousSchool.removeAt(index);
   }
 
-  loadStates() {
-    this.studentService.getStates().subscribe(data => {
-      this.states = data;
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+  
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
     });
   }
 
-  onStateChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    let stateId =Number(selectElement.value) ;
-    console.log(stateId);
- 
-    this.studentService.getCities(stateId).subscribe(data => {
-      this.cities = data;
-    });
-  }
+  
 }

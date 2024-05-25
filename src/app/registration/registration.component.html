@@ -33,9 +33,12 @@
       </div>
       <div class="form-group">
         <label>State:*</label>
-        <select formControlName="state" (change)="onStateChange($event)" >
+        <select formControlName="state">
           <option value="" disabled selected>Select State</option>
-          <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
+          <option value="kerala">Kerala</option>
+          <option value="kerala">Tamilnadu</option>
+          <option value="kerala">Karnataka</option>
+          <option value="kerala">Maharashtra</option>
         </select>
         <small *ngIf="studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid">State is required.</small>
       </div>
@@ -43,7 +46,12 @@
         <label>City:*</label>
         <select formControlName="city">
           <option value="" disabled selected>Select City</option>
-          <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+          <option value="kochi">kochi</option>
+          <option value="kochi">Kollam</option>
+          <option value="kochi">Adoor</option>
+          <option value="kochi">TVM</option>
+          <option value="kochi">Thrissur</option>
+          <option value="kochi">Kunnamkulam</option>
         </select>
         <small *ngIf="studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid">City is required.</small>
       </div>
@@ -54,19 +62,19 @@
           {{ studentForm.get('address.pincode')?.errors?.['required'] ? 'Pincode is required.' : 'Pincode must be 6 digits.' }}
         </small>
       </div>
-      <div class="form-group" style="display: flex; align-items: center; justify-content: center;">
+      <div class="form-group">
         <label>Subject:*</label>
         <div class="radio-group" style="display: flex; align-items: center;">
           <label class="radio-label">
-            <input type="checkbox" (change)="onCheckboxChange($event)" value="Math">
+            <input type="checkbox" (change)="onCheckboxChange($event)" formControlName="subject" value="Math">
             Math
           </label>
           <label class="radio-label">
-            <input type="checkbox" (change)="onCheckboxChange($event)" value="Science">
+            <input type="checkbox" (change)="onCheckboxChange($event)" formControlName="subject" value="Science">
             Science
           </label>
           <label class="radio-label">
-            <input type="checkbox" (change)="onCheckboxChange($event)" value="English">
+            <input type="checkbox" (change)="onCheckboxChange($event)" formControlName="subject" value="English">
             English
           </label>
         </div>
