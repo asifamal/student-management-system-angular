@@ -21,7 +21,7 @@
     </div>
     <div class="form-group">
       <label>Email:*</label>
-      <input formControlName="email" type="email" class="form-control">
+      <input formControlName="email" type="email" class="form-control" (input)="resetEmailTaken()">
       <small *ngIf="studentForm.get('email')?.touched && studentForm.get('email')?.invalid">
         {{ studentForm.get('email')?.errors?.['required'] ? 'Email is required.' : 'Invalid email format.' }}
       </small>
@@ -32,8 +32,7 @@
       <div class="form-group">
         <label>Street:*</label>
         <textarea formControlName="street" class="form-control"></textarea>
-        <small *ngIf="studentForm.get('address.street')?.touched && studentForm.get('address.street')?.invalid">Street
-          is required.</small>
+        <small *ngIf="studentForm.get('address.street')?.touched && studentForm.get('address.street')?.invalid">Street is required.</small>
       </div>
       <div class="form-group">
         <label>State:*</label>
@@ -44,8 +43,9 @@
           <option value="karnataka">Karnataka</option>
           <option value="maharashtra">Maharashtra</option>
         </select>
-        <small *ngIf="studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid">State is
-          required.</small>
+        <small *ngIf="studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid">State is required.</small>
+
+
       </div>
       <div class="form-group">
         <label>City:*</label>
@@ -58,8 +58,8 @@
           <option value="thrissur">Thrissur</option>
           <option value="kunnamkulam">Kunnamkulam</option>
         </select>
-        <small *ngIf="studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid">City is
-          required.</small>
+        <small *ngIf="studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid">City is required.</small>
+
       </div>
       <div class="form-group">
         <label>Pincode:*</label>

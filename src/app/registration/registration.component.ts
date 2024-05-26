@@ -101,6 +101,18 @@ export class RegistrationComponent implements OnInit {
   markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
-    });
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control); 
+      }
+    })
   }
+
+  resetEmailTaken() {
+    this.emailTaken = false;
+  }
+
+
+
+
+
 }
