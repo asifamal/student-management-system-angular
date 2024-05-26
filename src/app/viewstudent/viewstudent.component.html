@@ -16,6 +16,17 @@
             </ul>
         </div>
     </div>
+    <div class="card-footer" *ngIf="student.previous_schooling && student.previous_schooling.length > 0">
+        <h4>Previous School(s):</h4>
+        <div *ngFor="let school of student.previous_schooling; let i = index">
+            <h3><strong>School {{ i+1 }}:</strong></h3>
+            <ul style="list-style: none;">
+                <li><strong>School Name:</strong> {{ school.school_name }}</li>
+                <li><strong>Start Year:</strong> {{ school.start_year }}</li>
+                <li><strong>End Year:</strong> {{ school.end_year }}</li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <div class="button-div text-center">

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StudentserviceService } from '../services/studentservice.service'; 
+import { StudentserviceService } from '../services/studentservice.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -13,7 +13,6 @@ export class RegistrationComponent implements OnInit {
 
   studentForm!: FormGroup;
   emailTaken = false;
-
 
   constructor(private form: FormBuilder, private studentService: StudentserviceService, private router: Router) { }
 
@@ -32,8 +31,6 @@ export class RegistrationComponent implements OnInit {
       subjects: this.form.array([], Validators.required),
       previousSchool: this.form.array([])
     });
-  
-
   }
 
   get f() {
@@ -44,20 +41,11 @@ export class RegistrationComponent implements OnInit {
     return this.studentForm.get('previousSchool') as FormArray;
   }
 
-  onCheckboxChange(event: any): void {
-    const subjects: FormArray = this.studentForm.get('subjects') as FormArray;
-
-    if (event.target.checked) {
-      subjects.push(this.form.control(event.target.value));
-    } else {
-      const index = subjects.controls.findIndex(x => x.value === event.target.value);
-      subjects.removeAt(index);
-    }
+  get subjects() {
+    return this.studentForm.get('subjects') as FormArray;
   }
 
   onSubmit(data: any) {
-    this.markFormGroupTouched(this.studentForm);
-  
     if (this.studentForm.valid) {
       this.studentService.createStudent(data).subscribe(
         (res) => {
@@ -78,13 +66,14 @@ export class RegistrationComponent implements OnInit {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Something went wrong!',
+            text: 'Email is already taken!',
           });
         }
       );
+    } else {
+      this.markFormGroupTouched(this.studentForm);
     }
   }
-  
 
   addSchool() {
     const previousSchooling = this.form.group({
@@ -99,15 +88,19 @@ export class RegistrationComponent implements OnInit {
     this.previousSchool.removeAt(index);
   }
 
+  onSubjectChange(event: any) {
+    const subjects = this.subjects;
+    if (event.target.checked) {
+      subjects.push(this.form.control(event.target.value));
+    } else {
+      const index = subjects.controls.findIndex(x => x.value === event.target.value);
+      subjects.removeAt(index);
+    }
+  }
+
   markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
-  
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control);
-      }
     });
   }
-
-  
 }

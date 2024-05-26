@@ -11,5 +11,10 @@ export class Student {
       pincode: string;
     };
     subject!: string;
+    previousSchool!: {
+      schoolName: string;
+      startYear: Date;
+      endYear: Date;
+    }
   }
   

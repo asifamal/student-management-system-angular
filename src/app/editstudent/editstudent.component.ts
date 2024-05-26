@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { StudentserviceService } from '../services/studentservice.service';
 import { Router } from '@angular/router';
 import { Student } from '../models/student.model';
@@ -32,6 +32,7 @@ export class EditstudentComponent implements OnInit {
         pincode: ['', Validators.required]
       }),
       subjects: this.formBuilder.array([], Validators.required),
+      previousSchool: this.formBuilder.array([])
     });
   }
 
@@ -53,24 +54,47 @@ export class EditstudentComponent implements OnInit {
       });
 
 
+      console.log('Current Student Subjects:', currentStudent.subject);
+
+      if (currentStudent.previousSchool.length > 0) {
+        const previousSchools = this.formBuilder.array(
+          currentStudent.previousSchool.map((school: any) =>
+            this.formBuilder.group({
+              schoolName: [school.schoolName, Validators.required],
+              startYear: [school.startYear, Validators.required],
+              endYear: [school.endYear, Validators.required]
+            })
+          )
+        ) as FormArray;
+        this.studentForm.setControl('previousSchool', previousSchools);
+      }
+
+      // Populate subjects
       const subjects = this.studentForm.get('subjects') as FormArray;
-      subjects.clear()
-      currentStudent.subjects.forEach((subjects: any) => {
-        subjects.push(this.formBuilder.control(subjects));
+      currentStudent.subject.forEach((subject: string) => {
+        subjects.push(new FormControl(subject));
       });
-    }
+
+      console.log('Subjects FormArray:', subjects.value);
+    } 
   }
 
-  
-  onCheckboxChange(event: any): void {
+  onCheckboxChange(event: any, subject: string): void {
     const subjects: FormArray = this.studentForm.get('subjects') as FormArray;
 
     if (event.target.checked) {
-      subjects.push(this.formBuilder.control(event.target.value));
+      subjects.push(new FormControl(subject));
     } else {
-      const index = subjects.controls.findIndex(x => x.value === event.target.value);
-      subjects.removeAt(index);
+      const index = subjects.controls.findIndex((control: AbstractControl) => control.value === subject);
+      if (index !== -1) {
+        subjects.removeAt(index);
+      }
     }
+  }
+
+  isSubjectSelected(subject: string): boolean {
+    const subjects: FormArray = this.studentForm.get('subjects') as FormArray;
+    return subjects.value.includes(subject);
   }
 
   get f() {
@@ -81,15 +105,16 @@ export class EditstudentComponent implements OnInit {
     return this.studentForm.get('previousSchool') as FormArray;
   }
 
-  addPreviousSchool(): void {
-    this.previousSchoolControls.push(this.formBuilder.group({
-      schoolName: [''],
-      startYear: [''],
-      endYear: ['']
-    }));
+  addSchool() {
+    const previousSchooling = this.formBuilder.group({
+      schoolName: ['', Validators.required],
+      startYear: ['', Validators.required],
+      endYear: ['', Validators.required]
+    });
+    this.previousSchoolControls.push(previousSchooling);
   }
 
-  removeSchool(index: number): void {
+  removeSchool(index: number) {
     this.previousSchoolControls.removeAt(index);
   }
 
