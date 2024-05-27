@@ -11,6 +11,8 @@ import { Student } from '../models/student.model';
 })
 export class EditstudentComponent implements OnInit {
   studentForm!: FormGroup;
+  emailTaken = false;
+
 
   constructor(private formBuilder: FormBuilder, private studentService: StudentserviceService, private router: Router) { }
 
@@ -29,7 +31,7 @@ export class EditstudentComponent implements OnInit {
         street: ['', Validators.required],
         state: ['', Validators.required],
         city: ['', Validators.required],
-        pincode: ['', Validators.required]
+        pincode: ['', [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]]
       }),
       subjects: this.formBuilder.array([], Validators.required),
       previousSchool: this.formBuilder.array([])
@@ -112,6 +114,11 @@ export class EditstudentComponent implements OnInit {
       endYear: ['', Validators.required]
     });
     this.previousSchoolControls.push(previousSchooling);
+  }
+
+  isValidDateFormat(date: string): boolean {
+    const regex = /^\d{2}-\d{2}-\d{4}$/;
+    return regex.test(date);
   }
 
   removeSchool(index: number) {

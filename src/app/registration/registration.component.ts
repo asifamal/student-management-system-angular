@@ -33,6 +33,7 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
+
   get f() {
     return this.studentForm.controls;
   }
@@ -66,13 +67,18 @@ export class RegistrationComponent implements OnInit {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Email is already taken!',
+            text: 'An error has occured',
           });
         }
       );
     } else {
       this.markFormGroupTouched(this.studentForm);
     }
+  }
+
+  isValidDateFormat(date: string): boolean {
+    const regex = /^\d{2}-\d{2}-\d{4}$/;
+    return regex.test(date);
   }
 
   addSchool() {
@@ -98,18 +104,21 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  markFormGroupTouched(formGroup: FormGroup) {
+  markFormGroupTouched(formGroup: FormGroup | FormArray) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control); 
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.markFormGroupTouched(control);
       }
-    })
+    });
   }
+
 
   resetEmailTaken() {
     this.emailTaken = false;
   }
+
+
 
 
 

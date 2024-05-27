@@ -53,7 +53,7 @@ export class ListstudentComponent implements OnInit {
         this.studentService.deleteStudent(id).subscribe((res: any) => {
           Swal.fire({
             title: "Deleted!",
-            text: "Your file has been deleted.",
+            text: "Student has been deleted.",
             icon: "success"
           }).then(() => {
             this.getStudents(); 

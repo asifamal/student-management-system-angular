@@ -16,8 +16,14 @@
     <div class="form-group">
       <label>Date of Birth:*</label>
       <input formControlName="dateOfBirth" type="date" class="form-control">
-      <small *ngIf="studentForm.get('dateOfBirth')?.touched && studentForm.get('dateOfBirth')?.invalid">Date of Birth is
-        required.</small>
+      <small *ngIf="studentForm.get('dateOfBirth')?.touched && studentForm.get('dateOfBirth')?.invalid">
+        Date of Birth is required.
+      </small>
+      <small
+        *ngIf="studentForm.get('dateOfBirth')?.touched && !isValidDateFormat(studentForm.get('dateOfBirth')?.value)">
+        Invalid date format. Please use dd-mm-yyyy format.
+      </small>
+
     </div>
     <div class="form-group">
       <label>Email:*</label>
@@ -32,7 +38,8 @@
       <div class="form-group">
         <label>Street:*</label>
         <textarea formControlName="street" class="form-control"></textarea>
-        <small *ngIf="studentForm.get('address.street')?.touched && studentForm.get('address.street')?.invalid">Street is required.</small>
+        <small *ngIf="studentForm.get('address.street')?.touched && studentForm.get('address.street')?.invalid">Street
+          is required.</small>
       </div>
       <div class="form-group">
         <label>State:*</label>
@@ -43,7 +50,8 @@
           <option value="karnataka">Karnataka</option>
           <option value="maharashtra">Maharashtra</option>
         </select>
-        <small *ngIf="studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid">State is required.</small>
+        <small *ngIf="studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid">State is
+          required.</small>
 
 
       </div>
@@ -58,7 +66,8 @@
           <option value="thrissur">Thrissur</option>
           <option value="kunnamkulam">Kunnamkulam</option>
         </select>
-        <small *ngIf="studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid">City is required.</small>
+        <small *ngIf="studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid">City is
+          required.</small>
 
       </div>
       <div class="form-group">
@@ -87,19 +96,19 @@
           <p>School {{i+1}}</p>
         </strong>
         <div class="form-group">
-          <label for="schoolName">Previous School:</label>
+          <label for="schoolName">Previous School:*</label>
           <input type="text" id="schoolName" formControlName="schoolName" class="form-control" />
           <small *ngIf="previous.get('schoolName')?.touched && previous.get('schoolName')?.invalid">School Name is
             required.</small>
         </div>
         <div class="form-group">
-          <label for="startYear">Year of Start:</label>
+          <label for="startYear">Year of Start:*</label>
           <input type="date" id="startYear" formControlName="startYear" placeholder="dd-mm-yyyy" class="form-control" />
           <small *ngIf="previous.get('startYear')?.touched && previous.get('startYear')?.invalid">Start Year is
             required.</small>
         </div>
         <div class="form-group">
-          <label for="endYear">Year of End:</label>
+          <label for="endYear">Year of End:*</label>
           <input type="date" id="endYear" formControlName="endYear" placeholder="dd-mm-yyyy" class="form-control" />
           <small *ngIf="previous.get('endYear')?.touched && previous.get('endYear')?.invalid">End Year is
             required.</small>

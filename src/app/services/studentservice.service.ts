@@ -123,6 +123,7 @@ getStudentById(id: number): Observable<Student> {
   deleteStudent(id: string | undefined) {
     return this.http.delete(`http://127.0.0.1:8000/students/${id}/delete/`)
   }
+  
 
 
 
