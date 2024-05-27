@@ -15,6 +15,7 @@ export class StudentserviceService {
 
 
   private apiUrl = 'http://127.0.0.1:8000/students/create/';
+  private apiUrl2 = 'http://127.0.0.1:8000';
 
 
 
@@ -48,6 +49,13 @@ export class StudentserviceService {
 
     return this.http.post(this.apiUrl, transformedData, { headers: headers });
   }
+
+  checkEmailExists(email: string): Observable<boolean> {
+    return this.http.get<any>(`${this.apiUrl2}/check-email/?email=${email}`, { params: { email } }).pipe(
+      map(response => response.exists)
+    );
+  }
+  
 
   getStudent() {
   return this.http.get<any>('http://127.0.0.1:8000/students/').pipe(

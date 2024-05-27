@@ -48,26 +48,40 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(data: any) {
     if (this.studentForm.valid) {
-      this.studentService.createStudent(data).subscribe(
-        (res) => {
-          console.log(res);
-          Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: 'Student registration successful!',
-            showConfirmButton: false,
-            timer: 1500
-          }).then(() => {
-            this.router.navigate(['/home']);
-          });
+      const email = this.studentForm.get('email')?.value;
+      this.studentService.checkEmailExists(email).subscribe(
+        (emailExists) => {
+          if (emailExists) {
+            this.emailTaken = true;
+          } else {
+            this.studentService.createStudent(data).subscribe(
+              (res) => {
+                console.log(res);
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: 'Student registration successful!',
+                  showConfirmButton: false,
+                  timer: 1500
+                }).then(() => {
+                  this.router.navigate(['/home']);
+                });
+              },
+              (error) => {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'An error has occurred',
+                });
+              }
+            );
+          }
         },
         (error) => {
-          console.error(error);
-          this.emailTaken = true;
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'An error has occured',
+            text: 'An error has occurred',
           });
         }
       );
@@ -75,9 +89,10 @@ export class RegistrationComponent implements OnInit {
       this.markFormGroupTouched(this.studentForm);
     }
   }
+  
 
   isValidDateFormat(date: string): boolean {
-    const regex = /^\d{2}-\d{2}-\d{4}$/;
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
     return regex.test(date);
   }
 
@@ -116,6 +131,10 @@ export class RegistrationComponent implements OnInit {
 
   resetEmailTaken() {
     this.emailTaken = false;
+  }
+
+  goHome(){
+    this.router.navigate(['/']);
   }
 
 

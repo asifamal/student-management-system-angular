@@ -117,7 +117,7 @@ export class EditstudentComponent implements OnInit {
   }
 
   isValidDateFormat(date: string): boolean {
-    const regex = /^\d{2}-\d{2}-\d{4}$/;
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
     return regex.test(date);
   }
 
@@ -126,17 +126,51 @@ export class EditstudentComponent implements OnInit {
   }
 
   onUpdateStudent(): void {
+    this.emailTaken = false;
+  
     if (this.studentForm.valid) {
       const updatedStudent: Student = {
         id: this.studentService.currentStudentId,
         ...this.studentForm.value
       };
-      this.studentService.updateStudent(this.studentService.currentStudentId, updatedStudent)
-        .subscribe(() => {
-          this.router.navigate(['/home']);
-        });
+  
+
+      if (updatedStudent.email !== this.studentService.currentStudent.email) {
+
+        this.studentService.checkEmailExists(updatedStudent.email).subscribe(
+          (emailTaken: boolean) => {
+            console.log('Email taken:', emailTaken);
+            if (emailTaken) {
+              this.emailTaken = true;
+            } else {
+
+              this.studentService.updateStudent(this.studentService.currentStudentId, updatedStudent)
+                .subscribe(() => {
+                  this.router.navigate(['/home']);
+                });
+            }
+          }
+        );
+      } else {
+        this.studentService.updateStudent(this.studentService.currentStudentId, updatedStudent)
+          .subscribe(() => {
+            this.router.navigate(['/home']);
+          });
+      }
     } else {
       this.studentForm.markAllAsTouched();
     }
   }
+  
+  
+  
+
+  resetEmailTaken() {
+    this.emailTaken = false;
+  }
+
+  goHome(){
+    this.router.navigate(['/'])
+  }
+
 }

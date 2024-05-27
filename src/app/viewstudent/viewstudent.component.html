@@ -2,12 +2,10 @@
     <button class="btn btn-primary" (click)="goHome()">Go home</button>
 </div>
 
-
-
-<div class="card mx-auto" *ngIf="student">
-    <h2 class="card-header">Student Details</h2>
-    <div class="card-body">
-        <div class="details">
+<div class="student-card">
+    <div class="student-details">
+        <h2 class="card-header">Student Details</h2>
+        <div class="card-body">
             <p><strong>First Name: </strong>{{ student.first_name }}</p>
             <p><strong>Last Name: </strong>{{ student.last_name }}</p>
             <p><strong>Email: </strong>{{ student.email }}</p>
@@ -20,11 +18,13 @@
                 <li *ngFor="let subject of student.subjects">{{ subject }}</li>
             </ul>
         </div>
-        <div class="previous-schools" *ngIf="student.previous_schooling && student.previous_schooling.length > 0">
-            <h4>Previous School(s):</h4>
-            <div *ngFor="let school of student.previous_schooling; let i = index">
+    </div>
+    <div class="previous-schools" *ngIf="student.previous_schooling && student.previous_schooling.length > 0">
+        <h4>Previous School(s):</h4>
+        <div class="row">
+            <div class="col-md-6" *ngFor="let school of student.previous_schooling; let i = index">
                 <h3><strong>School {{ i+1 }}:</strong></h3>
-                <ul style="list-style: none;">
+                <ul>
                     <li><strong>School Name:</strong> {{ school.school_name }}</li>
                     <li><strong>Start Year:</strong> {{ school.start_year }}</li>
                     <li><strong>End Year:</strong> {{ school.end_year }}</li>
@@ -33,4 +33,3 @@
         </div>
     </div>
 </div>
-

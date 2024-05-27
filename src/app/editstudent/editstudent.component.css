@@ -69,3 +69,9 @@ small{
 button{
     margin-left: 10px;
 }
+
+.button-out{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
