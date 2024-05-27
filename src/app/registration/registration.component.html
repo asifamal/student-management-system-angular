@@ -1,3 +1,9 @@
+<div class="button-out">
+  <button type="button" class="btn btn-info btn-lg" (click)="goHome()">Go Home</button>
+</div>
+
+
+
 <form [formGroup]="studentForm">
   <div class="form-container">
     <h2>Student Registration</h2>
@@ -19,10 +25,11 @@
       <small *ngIf="studentForm.get('dateOfBirth')?.touched && studentForm.get('dateOfBirth')?.invalid">
         Date of Birth is required.
       </small>
-      <small *ngIf="studentForm.get('dateOfBirth')?.touched && !isValidDateFormat(studentForm.get('dateOfBirth')?.value)">
+      <small
+        *ngIf="studentForm.get('dateOfBirth')?.touched && !isValidDateFormat(studentForm.get('dateOfBirth')?.value)">
         Invalid date format. Please use dd-mm-yyyy format.
       </small>
-      
+
     </div>
     <div class="form-group">
       <label>Email:*</label>
@@ -37,7 +44,8 @@
       <div class="form-group">
         <label>Street:*</label>
         <textarea formControlName="street" class="form-control"></textarea>
-        <small *ngIf="studentForm.get('address.street')?.touched && studentForm.get('address.street')?.invalid">Street is required.</small>
+        <small *ngIf="studentForm.get('address.street')?.touched && studentForm.get('address.street')?.invalid">Street
+          is required.</small>
       </div>
       <div class="form-group">
         <label>State:*</label>
@@ -48,7 +56,8 @@
           <option value="karnataka">Karnataka</option>
           <option value="maharashtra">Maharashtra</option>
         </select>
-        <small *ngIf="studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid">State is required.</small>
+        <small *ngIf="studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid">State is
+          required.</small>
 
 
       </div>
@@ -63,7 +72,8 @@
           <option value="thrissur">Thrissur</option>
           <option value="kunnamkulam">Kunnamkulam</option>
         </select>
-        <small *ngIf="studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid">City is required.</small>
+        <small *ngIf="studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid">City is
+          required.</small>
 
       </div>
       <div class="form-group">
@@ -115,7 +125,6 @@
     <div class="buttons">
       <button type="button" class="btn btn-info" (click)="addSchool()">Add Previous Schooling</button>
       <button type="button" class="btn btn-primary" (click)="onSubmit(studentForm.value)">Submit</button>
-      <button type="button" class="btn btn-info" (click)="goHome()">Go Home</button>
     </div>
   </div>
 </form>

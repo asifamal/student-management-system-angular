@@ -76,9 +76,10 @@
       <div class="form-group">
         <label>Pincode:*</label>
         <input formControlName="pincode" type="number" class="form-control">
-        <small
-          *ngIf="studentForm.get('address.pincode')?.touched && studentForm.get('address.pincode')?.invalid">Pincode is
-          required.*</small>
+        <small *ngIf="studentForm.get('address.pincode')?.touched && studentForm.get('address.pincode')?.invalid">
+          {{ studentForm.get('address.pincode')?.errors?.['required'] ? 'Pincode is required.' : 'Pincode must be 6
+          digits.' }}
+        </small>
       </div>
     </div>
 

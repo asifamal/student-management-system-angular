@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractCon
 import { StudentserviceService } from '../services/studentservice.service';
 import { Router } from '@angular/router';
 import { Student } from '../models/student.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editstudent',
@@ -31,7 +32,7 @@ export class EditstudentComponent implements OnInit {
         street: ['', Validators.required],
         state: ['', Validators.required],
         city: ['', Validators.required],
-        pincode: ['', [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)]]
+        pincode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]]
       }),
       subjects: this.formBuilder.array([], Validators.required),
       previousSchool: this.formBuilder.array([])
@@ -134,19 +135,23 @@ export class EditstudentComponent implements OnInit {
         ...this.studentForm.value
       };
   
-
       if (updatedStudent.email !== this.studentService.currentStudent.email) {
-
         this.studentService.checkEmailExists(updatedStudent.email).subscribe(
           (emailTaken: boolean) => {
             console.log('Email taken:', emailTaken);
             if (emailTaken) {
               this.emailTaken = true;
             } else {
-
               this.studentService.updateStudent(this.studentService.currentStudentId, updatedStudent)
                 .subscribe(() => {
-                  this.router.navigate(['/home']);
+                  Swal.fire({
+                    title: 'Success!',
+                    text: 'Student details updated successfully',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                  }).then(() => {
+                    this.router.navigate(['/home']);
+                  });
                 });
             }
           }
@@ -154,13 +159,21 @@ export class EditstudentComponent implements OnInit {
       } else {
         this.studentService.updateStudent(this.studentService.currentStudentId, updatedStudent)
           .subscribe(() => {
-            this.router.navigate(['/home']);
+            Swal.fire({
+              title: 'Success!',
+              text: 'Student details updated successfully',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              this.router.navigate(['/home']);
+            });
           });
       }
     } else {
       this.studentForm.markAllAsTouched();
     }
   }
+  
   
   
   
@@ -172,5 +185,6 @@ export class EditstudentComponent implements OnInit {
   goHome(){
     this.router.navigate(['/'])
   }
+
 
 }

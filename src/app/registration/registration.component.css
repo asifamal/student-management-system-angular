@@ -92,3 +92,9 @@ border: 1px solid #ccc;
   justify-content: center;
   margin-right: 40px;
 }
+
+.button-out{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
