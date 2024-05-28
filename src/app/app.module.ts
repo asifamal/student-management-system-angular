@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListstudentComponent } from './liststudent/liststudent.component';
 import { EditstudentComponent } from './editstudent/editstudent.component';
 import { ViewstudentComponent } from './viewstudent/viewstudent.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ViewstudentComponent } from './viewstudent/viewstudent.component';
     RegistrationComponent,
     ListstudentComponent,
     EditstudentComponent,
-    ViewstudentComponent
+    ViewstudentComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
