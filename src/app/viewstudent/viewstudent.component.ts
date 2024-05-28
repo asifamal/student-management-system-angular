@@ -9,7 +9,7 @@ import { StudentserviceService } from '../services/studentservice.service';
 })
 export class ViewstudentComponent implements OnInit {
 
-  student: any
+  student: any = undefined
   studId: any
 
   constructor(private route: ActivatedRoute,private studentService: StudentserviceService, private router: Router){}
@@ -28,6 +28,10 @@ export class ViewstudentComponent implements OnInit {
   }
 
   formatDate(dateString: string): string {
+    if (!dateString) {
+      return ''; 
+    }
+    
     const [year, month, day] = dateString.split('-');
     return `${day}-${month}-${year}`;
   }

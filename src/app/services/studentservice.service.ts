@@ -55,55 +55,55 @@ export class StudentserviceService {
       map(response => response.exists)
     );
   }
-  
+
 
   getStudent() {
-  return this.http.get<any>('http://127.0.0.1:8000/students/').pipe(
-    map((response) => {
-      let students: Student[] = [];
-      for (let key in response) {
-        if (response.hasOwnProperty(key)) {
-          let studentData = response[key];
-          let previousSchoolData = studentData.previous_schooling.map((school: any) => ({
-            schoolName: school.school_name,
-            startYear: school.start_year,
-            endYear: school.end_year
-          }));
-          let student: Student = {
-            id: studentData.id,
-            firstName: studentData.first_name,
-            lastName: studentData.last_name,
-            email: studentData.email,
-            dateOfBirth: studentData.date_of_birth,
-            address: {
-              street: studentData.street,
-              state: studentData.state,
-              city: studentData.city,
-              pincode: studentData.pincode
-            },
-            subject: studentData.subjects,
-            previousSchool: previousSchoolData
-          };
-          students.push(student);
+    return this.http.get<any>('http://127.0.0.1:8000/students/').pipe(
+      map((response) => {
+        let students: Student[] = [];
+        for (let key in response) {
+          if (response.hasOwnProperty(key)) {
+            let studentData = response[key];
+            let previousSchoolData = studentData.previous_schooling.map((school: any) => ({
+              schoolName: school.school_name,
+              startYear: school.start_year,
+              endYear: school.end_year
+            }));
+            let student: Student = {
+              id: studentData.id,
+              firstName: studentData.first_name,
+              lastName: studentData.last_name,
+              email: studentData.email,
+              dateOfBirth: studentData.date_of_birth,
+              address: {
+                street: studentData.street,
+                state: studentData.state,
+                city: studentData.city,
+                pincode: studentData.pincode
+              },
+              subject: studentData.subjects,
+              previousSchool: previousSchoolData
+            };
+            students.push(student);
+          }
         }
-      }
-      return students;
-    })
-  );
-}
+        return students;
+      })
+    );
+  }
 
 
 
 
-getStudentById(id: number): Observable<Student> {
-  return this.http.get<Student>(`http://127.0.0.1:8000/students/${id}/`).pipe(
-    tap((student: Student) => {
-      this.currentStudent = student;
-      console.log('Fetched student:', this.currentStudent);
-    })
-  );
-}
-  
+  getStudentById(id: number): Observable<Student> {
+    return this.http.get<Student>(`http://127.0.0.1:8000/students/${id}/`).pipe(
+      tap((student: Student) => {
+        this.currentStudent = student;
+        console.log('Fetched student:', this.currentStudent);
+      })
+    );
+  }
+
 
   updateStudent(id: string | undefined, studentData: any) {
     const { firstName, lastName, dateOfBirth, email, address, subjects, previousSchool } = studentData;
@@ -131,7 +131,7 @@ getStudentById(id: number): Observable<Student> {
   deleteStudent(id: string | undefined) {
     return this.http.delete(`http://127.0.0.1:8000/students/${id}/delete/`)
   }
-  
+
 
 
 
