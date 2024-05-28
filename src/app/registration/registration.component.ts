@@ -89,7 +89,7 @@ export class RegistrationComponent implements OnInit {
       this.markFormGroupTouched(this.studentForm);
     }
   }
-  
+
 
   isValidDateFormat(date: string): boolean {
     const regex = /^\d{4}-\d{2}-\d{2}$/;
@@ -133,7 +133,7 @@ export class RegistrationComponent implements OnInit {
     this.emailTaken = false;
   }
 
-  goHome(){
+  goHome() {
     this.router.navigate(['/']);
   }
 
